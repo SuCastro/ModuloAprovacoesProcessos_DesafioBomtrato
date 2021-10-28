@@ -1,4 +1,4 @@
-package DesafioBomtrato.ModuloAprovacoes.Models;
+package DesafioBomtrato.ModuloAprovacoes.Model;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

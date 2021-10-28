@@ -1,4 +1,4 @@
-package DesafioBomtrato.ModuloAprovacoes.Models;
+package DesafioBomtrato.ModuloAprovacoes.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,15 +14,15 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="Processos")
-	public class Processos {
+@Table(name="Processo")
+	public class Processo {
 		
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		
 		@NotBlank
-		@Digits(integer = 8, fraction = 2, message = "Apenas milhares e 2 casas após o ponto")
+		@Digits(integer = 8, fraction = 2, message = "Apenas milhares e 2 casas após o ponto.")
 		private Double valorCausa;
 		
 		@NotBlank
@@ -35,8 +35,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JsonIgnoreProperties({ "processosJuridicos" })
+		@JsonIgnoreProperties({ "processoJuridico" })
 		private Usuario Usuario;
+		
+		private Boolean status;
 
 
 		public Long getId() {
@@ -87,5 +89,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		public void setUsuario(Usuario usuario) {
 			Usuario = usuario;
 		}
+		
+		public Boolean getStatus() {
+			return status;
+		}
+
+
+		public void setStatus(Boolean status) {
+			this.status = status;
+		}
+
 	 		
 }

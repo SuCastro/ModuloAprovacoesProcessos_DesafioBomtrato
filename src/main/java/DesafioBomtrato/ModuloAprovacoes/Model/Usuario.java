@@ -1,4 +1,4 @@
-package DesafioBomtrato.ModuloAprovacoes.Models;
+package DesafioBomtrato.ModuloAprovacoes.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class Usuario
 	
 	@OneToMany(mappedBy = "Usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"Usuario"})
-	private List<Processos> processosJuridicos = new ArrayList<>();
+	private List<Processo> processoJuridico = new ArrayList<>();
 
 	public Usuario() {
 		super();
@@ -108,14 +108,13 @@ public class Usuario
 	}
 
 
-	public List<Processos> getMinhasPostagens() {
-		return processosJuridicos;
+	public List<Processo> getMeusProcessos() {
+		return processoJuridico;
 	}
 
 
-	public void setMinhasPostagens(List<Processos> processosJuridicos) {
-		this.processosJuridicos = processosJuridicos;
+	public void setMeusProcessos(List<Processo> processoJuridico) {
+		this.processoJuridico = processoJuridico;
 	}
-
 	
 }
