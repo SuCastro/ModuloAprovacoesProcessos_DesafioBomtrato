@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,17 +50,12 @@ import DesafioBomtrato.ModuloAprovacoes.Service.ProcessoService;
 			return ResponseEntity.ok(repository.findAll());
 		}
 		
+		
 		@PostMapping("/cadastrar")
-		public ResponseEntity<Object> cadastrarProcesso(@Valid @RequestBody Processo novoProcesso) {
-			Optional<?> objetoCadastrado = service.cadastrarProcesso(novoProcesso);
-
-			if (objetoCadastrado.isPresent()) {
-				return ResponseEntity.status(201).body(objetoCadastrado.get());
-			} else {
-				return ResponseEntity.status(400).build();
-			}
-
+		public ResponseEntity<Processo> post (@RequestBody Processo processo){
+			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(processo));
 		}
+
 
 		@PutMapping("/editar")
 		public ResponseEntity<Object> editar (@Valid @RequestBody Processo processoParaEditar) {
