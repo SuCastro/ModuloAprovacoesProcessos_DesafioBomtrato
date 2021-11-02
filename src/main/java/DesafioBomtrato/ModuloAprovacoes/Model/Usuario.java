@@ -1,6 +1,5 @@
 package DesafioBomtrato.ModuloAprovacoes.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,8 +13,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Classe Usuario utilizada como entidade para registrar usuarios no Banco de dados.
+ * @author Suellen Castro
+ *
+ */
+
+
 @Entity
-@Table( name = "Usuario")
+@Table(name="tb_usuario")
 public class Usuario
 {
 
@@ -39,9 +45,9 @@ public class Usuario
 	@NotBlank (message = "Obrigatório um tipo de usuario.")
 	private String tipoDeUsuario;
 	
-	@OneToMany(mappedBy = "Usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"Usuario"})
-	private List<Processo> processoJuridico = new ArrayList<>();
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("usuario")
+	private List<Processo> processoJuridico;
 
 	public Usuario() {
 		super();
@@ -108,13 +114,14 @@ public class Usuario
 	}
 
 
-	public List<Processo> getMeusProcessos() {
+	public List<Processo> getProcessoJuridico() {
 		return processoJuridico;
 	}
 
 
-	public void setMeusProcessos(List<Processo> processoJuridico) {
+	public void setProcessoJuridico(List<Processo> processoJuridico) {
 		this.processoJuridico = processoJuridico;
 	}
+
 	
 }

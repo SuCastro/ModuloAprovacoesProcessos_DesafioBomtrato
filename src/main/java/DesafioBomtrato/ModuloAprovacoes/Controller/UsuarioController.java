@@ -22,6 +22,11 @@ import DesafioBomtrato.ModuloAprovacoes.Model.UsuarioDTO;
 import DesafioBomtrato.ModuloAprovacoes.Repository.UsuarioRepository;
 import DesafioBomtrato.ModuloAprovacoes.Service.UsuarioService;
 
+/**Nessa classe possui os endpoints da API para cadastrar, autenticar e endpoints de busca.
+ * 
+ * @author Suellen Castro
+ */
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -42,7 +47,7 @@ public class UsuarioController {
 			} else {
 				return ResponseEntity.status(400).build();
 			}
-
+			
 		}
 		
 		@PutMapping("/autenticar")

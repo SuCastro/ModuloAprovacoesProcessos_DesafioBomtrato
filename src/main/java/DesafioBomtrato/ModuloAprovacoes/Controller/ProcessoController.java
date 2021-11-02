@@ -1,5 +1,6 @@
 package DesafioBomtrato.ModuloAprovacoes.Controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,62 +23,90 @@ import DesafioBomtrato.ModuloAprovacoes.Model.Processo;
 import DesafioBomtrato.ModuloAprovacoes.Repository.ProcessoRepository;
 import DesafioBomtrato.ModuloAprovacoes.Service.ProcessoService;
 
-	@RestController
-	@RequestMapping("/Processo")
-	@CrossOrigin("*")
-	public class ProcessoController {
+/**
+ * Nessa classe possui os endpoints da API para cadastrar, editar, inativar 
+ * ou ativar e aprovar.
+ * 
+ * @author Suellen Castro
+ */
 
-		@Autowired
-		private ProcessoRepository repository;
+@RestController
+@RequestMapping("/Processo")
+@CrossOrigin("*")
+public class ProcessoController {
 
-		@Autowired
-		private ProcessoService service;
+	@Autowired
+	private ProcessoRepository repository;
 
-			
-		@GetMapping
-		public ResponseEntity<List<Processo>> GetAll() {
-			return ResponseEntity.status(200).body(repository.findAll());
+	@Autowired
+	private ProcessoService service;
+
+	@GetMapping
+	public ResponseEntity<List<Processo>> GetAll() {
+		return ResponseEntity.status(200).body(repository.findAll());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Processo> GetById(@PathVariable Long id) {
+		return repository.findById(id).map(resp -> ResponseEntity.status(200).body(resp))
+				.orElse(ResponseEntity.status(404).build());
+	}
+
+	@GetMapping("/valorCausa/{valorCausa}")
+	public ResponseEntity<List<Processo>> GetByValorCausa(@PathVariable BigDecimal valorCausa) {
+		return ResponseEntity.ok(repository.findAllByValorCausa(valorCausa));
+	}
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Processo> post(@RequestBody Processo processo) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(processo));
+	}
+
+	@PutMapping("/editar")
+	public ResponseEntity<Object> editar(@Valid @RequestBody Processo processoParaEditar) {
+		Optional<Processo> objetoEditado = service.editarProcesso(processoParaEditar);
+
+		if (objetoEditado.isPresent()) {
+			return ResponseEntity.status(201).body(objetoEditado.get());
+		} else {
+			return ResponseEntity.status(400).build();
 		}
-		
-		@GetMapping("/{id}")
-		public ResponseEntity<Processo> GetById(@PathVariable Long id) {
-			return repository.findById(id).map(resp -> ResponseEntity.status(200).body(resp))
-					.orElse(ResponseEntity.status(404).build());
-		}
-		
-		@GetMapping("/valorCausa/{valorCausa}")
-		public ResponseEntity<List<Processo>> GetByValorCausa (@PathVariable Double valorCausa) {
-			return ResponseEntity.ok(repository.findAll());
-		}
-		
-		
-		@PostMapping("/cadastrar")
-		public ResponseEntity<Processo> post (@RequestBody Processo processo){
-			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(processo));
+	}
+
+	@PutMapping("/inativar/{id}")
+	public ResponseEntity<Object> inativarPorId(@PathVariable(value = "id") Long id) {
+		Optional<Processo> objetoInativado = service.inativarProcesso(id);
+
+		if (objetoInativado.isPresent()) {
+			return ResponseEntity.status(201).body(objetoInativado.get());
+		} else {
+			return ResponseEntity.status(400).build();
 		}
 
+	}
 
-		@PutMapping("/editar")
-		public ResponseEntity<Object> editar (@Valid @RequestBody Processo processoParaEditar) {
-			Optional<Processo> objetoEditado = service.editarProcesso(processoParaEditar);
+	@PutMapping("/ativar/{id}")
+	public ResponseEntity<Object> ativarPorId(@PathVariable(value = "id") Long id) {
+		Optional<Processo> objetoAtivado = service.ativarProcesso(id);
 
-			if (objetoEditado.isPresent()) {
-				return ResponseEntity.status(201).body(objetoEditado.get());
-			} else {
-				return ResponseEntity.status(400).build();
-			}
+		if (objetoAtivado.isPresent()) {
+			return ResponseEntity.status(201).body(objetoAtivado.get());
+		} else {
+			return ResponseEntity.status(400).build();
 		}
-		
-		@DeleteMapping("/inativar/{id}")
-		public ResponseEntity<Object> inativarPorId(@PathVariable(value = "id") Long id) {
-			Optional<Processo> objetoExistente = repository.findById(id);
-			if (objetoExistente.isPresent()) {
-				repository.deleteById(id);
-				return ResponseEntity.status(200).build();
-			} else {
-				return ResponseEntity.status(400).build();
-			}
 
+	}
+
+	@PutMapping("/aprovar/{id}")
+	public ResponseEntity<Object> aprovarPorId(@PathVariable(value = "id") Long id) {
+		Optional<Processo> objetoAprovado = service.aprovarProcesso(id);
+
+		if (objetoAprovado.isPresent()) {
+			return ResponseEntity.status(201).body(objetoAprovado.get());
+		} else {
+			return ResponseEntity.status(400).build();
 		}
-		
+
+	}
+
 }

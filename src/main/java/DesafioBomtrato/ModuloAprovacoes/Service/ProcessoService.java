@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import DesafioBomtrato.ModuloAprovacoes.Model.Processo;
 import DesafioBomtrato.ModuloAprovacoes.Repository.ProcessoRepository;
 
+/**Nesta classe utilizei de métodos que permitem a edição, inativação e aprovação de processos.
+ * 
+ * @author Suellen Castro
+ */
+
 @Service
 public class ProcessoService {
 
@@ -21,6 +26,39 @@ public class ProcessoService {
 		}).orElseGet(() -> {
 			return Optional.empty();
 		});
+	}
+	
+	public Optional<Processo> inativarProcesso(Long id) {
+		Optional<Processo> processoEncontrado=repositoryP.findById(id);
+		if(processoEncontrado.isPresent()) {
+			Processo processo=processoEncontrado.get();
+			processo.setStatus(false);
+			return Optional.ofNullable(repositoryP.save(processo));
+		}else {
+			return Optional.empty();
+		}
+	}
+	
+	public Optional<Processo> ativarProcesso(Long id) {
+		Optional<Processo> processoEncontrado=repositoryP.findById(id);
+		if(processoEncontrado.isPresent()) {
+			Processo processo=processoEncontrado.get();
+			processo.setStatus(true);
+			return Optional.ofNullable(repositoryP.save(processo));
+		}else {
+			return Optional.empty();
+		}
+	}
+	
+	public Optional<Processo> aprovarProcesso(Long id) {
+		Optional<Processo> processoAprovado=repositoryP.findById(id);
+		if(processoAprovado.isPresent()) {
+			Processo processo=processoAprovado.get();
+			processo.setAprovacao(true);
+			return Optional.ofNullable(repositoryP.save(processo));
+		}else {
+			return Optional.empty();
+		}
 	}
 		
 }

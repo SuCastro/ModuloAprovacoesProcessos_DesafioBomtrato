@@ -10,6 +10,11 @@ import DesafioBomtrato.ModuloAprovacoes.Model.Usuario;
 import DesafioBomtrato.ModuloAprovacoes.Model.UsuarioDTO;
 import DesafioBomtrato.ModuloAprovacoes.Repository.UsuarioRepository;
 
+/**Nessa camada de serviço, utilizei métodos que possibilitam o cadastro de 
+ * usuários e de autenticação.
+ * 
+ * @author Suellen Castro
+ */
 
 @Service
 public class UsuarioService {
@@ -44,7 +49,11 @@ public class UsuarioService {
 				usuarioParaAutenticar.setSenha(usuarioExistente.getSenha());
 				return Optional.ofNullable(usuarioParaAutenticar);
 			} else {
-				return Optional.empty();}
+				return Optional.empty();
+				}
+		}).orElseGet(() -> {
+			return Optional.empty();
+
 		});
 	
 		}

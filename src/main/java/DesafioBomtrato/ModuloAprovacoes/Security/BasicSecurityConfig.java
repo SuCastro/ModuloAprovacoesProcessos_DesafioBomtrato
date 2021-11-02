@@ -12,6 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**Nessa classe está liberado o acesso apenas para cadastro de usuario e autenticação,
+ * o restante necessita de token para ter acesso. 
+ * 
+ * @author Suellen Castro
+ */
 
 @EnableWebSecurity
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -37,7 +42,8 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/usuario/salvar").permitAll()
+		//.antMatchers("/**").permitAll()
+		.antMatchers(HttpMethod.POST, "/usuario/cadastrar").permitAll()
 		.antMatchers(HttpMethod.PUT, "/usuario/autenticar").permitAll()
  		.anyRequest().authenticated()
  		.and().httpBasic()
