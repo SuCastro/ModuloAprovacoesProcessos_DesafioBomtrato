@@ -34,6 +34,6 @@ O aprovador pode:
 * Só é possivel inserir 50 caracteres, contemplando apenas letras no campo de 'escritório'
 * Só é possivel inserir 100 caracteres, contemplando apenas letras no campo de 'reclamante'
 
-*Atenção: 
+## Atenção: 
 - No application properties necessário configurar Usuário e Senha para criar o banco de dados!
 - Realizei testes dos endpoints via Postman e a collection está disponível neste repositório.
