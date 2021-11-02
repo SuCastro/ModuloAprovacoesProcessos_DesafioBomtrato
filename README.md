@@ -21,7 +21,7 @@ processos nessa plataforma.
 - MySQL Driver
 - Validation 
 
-</p>
+
 ## Implementações
 O aprovador pode:
 * Cadastrar processos
@@ -29,10 +29,17 @@ O aprovador pode:
 * Visualizar processos
 * Aprovar processos
 
+Usuario pode:
+* Cadastrar novos usuarios
+* Buscar usuarios por id
+* Buscar usuarios por nome completo
+* Deletar usuario
+
 ## Informações adicionais
 * Não é possivel a inserção de valores abaixo de R$ 30.000
 * Só é possivel inserir 50 caracteres, contemplando apenas letras no campo de 'escritório'
 * Só é possivel inserir 100 caracteres, contemplando apenas letras no campo de 'reclamante'
+* Possuo uma camada de segurança onde é necessario um token de autentificação para ultilização da maioria dos métodos.
 
 ## Atenção: 
 - No application properties necessário configurar Usuário e Senha para criar o banco de dados!
